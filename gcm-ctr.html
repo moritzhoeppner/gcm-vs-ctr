@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GCM vs. CTR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="gcm-ctr.js"></script>
+  <link rel="stylesheet" href="gcm-ctr.css">
+</head>
+<body>
+  <main>
+    <h1>GCM vs. CTR</h1>
+    <section>
+      Encrypt data with AES-GCM, decrypt the ciphertext with AES-CTR. You'll get the original
+      ciphertext plus 128 bits of garbage when you add <code>00000002</code> to the IV that you used
+      for encryption.
+    </section>
+    <section class="grid">
+      <label for="key">Key:</label>
+      <input type="text" id="key">
+
+      <label for="iv">IV:</label>
+      <input type="text" id="iv">
+      
+      <label for="plaintext">Plaintext:</label>
+      <textarea id="plaintext"></textarea>
+      
+      <button type="button" id="encryptBtn">Encrypt with AES-GCM</button>
+      <label for="ciphertext">Ciphertext:</label>
+      
+      <textarea id="ciphertext"></textarea>
+      <button type="button" id="decryptBtn">Decrypt with AES-CTR</button>
+    </section>
+  </main>
+</body>
+</html>
