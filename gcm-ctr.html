@@ -11,16 +11,58 @@
   <main>
     <h1>GCM vs. CTR</h1>
     <section>
-      Encrypt data with AES-GCM, decrypt the ciphertext with AES-CTR. You'll get the original
-      plaintext plus 128 bits of garbage when you add <code>00000002</code> to the IV that you used
-      for encryption.
+      <p>Here you can encrypt data with AES-GCM and decrypt it with AES-CTR.</p>
+      <details>
+        <summary>Tell me more</summary>
+        <p>
+          The browser's native crypto API is used for both encryption and decryption. Its CTR
+          implementation expects a first counter block and a counter length. It generates the
+          subsequent counter blocks by incrementing the last [counter length] bytes:
+        </p>
+        <div class="grid blocks-example">
+          <div>First counter block:</div>
+          <math>
+            <mn>065872b72582a7827afcfc63</mn>
+            <munder>
+              <mn>00000002</mn>
+              <munder>
+                <mo>&#x23DF;</mo>
+                <mtext>counter</mtext>
+              </munder>
+            </munder>
+          </math>
+          <div>Second counter block:</div>
+          <math>
+            <mn>065872b72582a7827afcfc63</mn>
+            <munder>
+              <mn>00000003</mn>
+              <munder>
+                <mo>&#x23DF;</mo>
+                <mtext>counter + 1</mtext>
+              </munder>
+            </munder>
+          </math>
+          <div>Etc.</div>
+        </div>
+        <p>
+          GCM does the same thing if your IV is 12 bytes long. That's why in the default setting,
+          you can decrypt GCM ciphertext with CTR: You'll get the original plaintext plus 128 bits
+          of garbage, which results from "decrypting" the authentication tag.
+        </p>
+      </details>
     </section>
     <section class="grid">
       <label for="key">Key:</label>
       <input type="text" id="key">
 
-      <label for="iv">IV:</label>
+      <label for="iv">IV for GCM:</label>
       <input type="text" id="iv">
+
+      <label for="firstCtr">First CTR block:</label>
+      <input type="text" id="firstCtr">
+
+      <label for="ctrLen">CTR counter length:</label>
+      <input type="text" id="ctrLen" value="4">
       
       <label for="plaintext">Plaintext:</label>
       <textarea id="plaintext"></textarea>

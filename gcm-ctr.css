@@ -1,19 +1,28 @@
 main {
   margin: auto;
-  max-width: 80ch;
+  max-width: 84ch;
 }
 
 main > * + * {
   margin-block-start: 1.5em;
 }
 
+summary {
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: min-content minmax(0, 1fr);
+  grid-template-columns: max-content minmax(0, 1fr);
   gap: 10px;
 }
 
 .grid button {
   grid-column-start: 2;
   width: max-content;
+}
+
+.blocks-example {
+  max-width: max-content;
+  margin: auto;
 }

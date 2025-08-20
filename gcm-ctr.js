@@ -4,6 +4,9 @@ document.addEventListener(
     // Generate a 32 byte (= 256 bit) encryption key and a 12 byte (= 96 bit) IV.
     generateAndDisplayRandomValue(32, 'key');
     generateAndDisplayRandomValue(12, 'iv');
+
+    // Set the first counter block so that the GCM ciphertext can be decrypted.
+    document.getElementById('firstCtr').value = document.getElementById('iv').value + '00000002';
     
     document.getElementById('encryptBtn').addEventListener('click', encryptGcm);
     document.getElementById('decryptBtn').addEventListener('click', decryptCtr);
@@ -37,13 +40,14 @@ async function encryptGcm() {
 async function decryptCtr() {
   const ciphertext = hexToBytes(document.getElementById('ciphertext').value);
   const key        = await cryptoKey('AES-CTR');
-  const iv         = hexToBytes(document.getElementById('iv').value);
+  const counter    = hexToBytes(document.getElementById('firstCtr').value);
+  const ctrLength  = parseInt(document.getElementById('ctrLen').value) * 8;
 
   const plaintext = await window.crypto.subtle.decrypt(
     {
       name: 'AES-CTR',
-      counter: iv,
-      length: 32
+      counter,
+      length: ctrLength
     },
     key,
     ciphertext
