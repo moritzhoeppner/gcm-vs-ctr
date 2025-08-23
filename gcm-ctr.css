@@ -26,3 +26,9 @@ summary {
   max-width: max-content;
   margin: auto;
 }
+
+@media(max-width: 60ch) {
+  .blocks-example {
+    grid-template-columns: 1fr;
+  }
+}
