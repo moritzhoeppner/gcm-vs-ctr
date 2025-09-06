@@ -46,9 +46,12 @@
           <div>Etc.</div>
         </div>
         <p>
-          GCM does the same thing if your IV is 12 bytes long. That's why in the default setting,
+          GCM does the same thing if your IV is 12 bytes long. That's why, in the default setting,
           you can decrypt GCM ciphertext with CTR: You'll get the original plaintext plus 128 bits
-          of garbage, which results from "decrypting" the authentication tag.
+          of garbage, which result from "decrypting" the authentication tag.
+        </p>
+        <p>
+          If you want to read a little further, <a href="https://dev.to/moritzhoeppner/how-to-decrypt-broken-gcm-ciphertext-58a1" target="_blank">this blog post</a> might be for you.
         </p>
       </details>
     </section>
